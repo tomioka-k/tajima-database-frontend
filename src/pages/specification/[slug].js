@@ -8,8 +8,8 @@ import {
 
 export default function Specification({ specification }) {
   return (
-    <Layout title={specification.name}>
-      <div className="container px-50 py-20 mx-auto">
+    <Layout title={`${specification.name} | 防水仕様`}>
+      <div className="md:container lg:max-w-4xl w-50 px-50 py-10 mx-auto">
         <div className="flex justify-center">
           <Image src={specification.image} width={640} height={360} />
         </div>
@@ -17,18 +17,24 @@ export default function Specification({ specification }) {
           <h1 className="text-4xl">{specification.name}</h1>
           <p className="text-gray-500">{specification.method_name}</p>
         </div>
+        <br />
+        <p>{specification.description}</p>
+        <div className="py-10">
+          <h2 className="text-2xl">基本情報</h2>
+          <hr />
+        </div>
         {specification.base && "適用下地："}
         {specification.base &&
           specification.base.map((base) => <p key={base}>{base}</p>)}
-        <br />
-        <p>{specification.description}</p>
-        <br />
-        {/* koutei */}
-        <h1 className="text-3xl py-2">工程</h1>
-        <hr />
+
+        {/* process */}
+        <div className="py-10">
+          <h2 className="text-2xl">工程</h2>
+          <hr />
+        </div>
         <div className="flex flex-wrap">
           <div className="w-1/2 mx-auto overflow-auto">
-            <table className="table-auto w-full text-left whitespace-no-wrap">
+            <table className="table-auto w-full mx-auto text-left whitespace-no-wrap">
               <thead>
                 <tr>
                   <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
@@ -50,6 +56,9 @@ export default function Specification({ specification }) {
                       <td className="px-4 py-3">{process.material.name}</td>
                       <td className="px-4 py-3">
                         {process.min_quantity}
+                        {process.max_quantity
+                          ? `～${process.max_quantity}`
+                          : ""}
                         {process.unit}
                       </td>
                     </tr>
@@ -57,19 +66,58 @@ export default function Specification({ specification }) {
               </tbody>
             </table>
           </div>
-          <div className="w-1/2 mx-auto overflow-auto">sample</div>
+          {/* sub_process */}
+          <div className="w-1/2 mx-auto overflow-auto">
+            <table className="table-auto w-full mx-auto text-left whitespace-no-wrap">
+              <thead>
+                <tr>
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                    工程
+                  </th>
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                    使用材料名
+                  </th>
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                    使用量
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {specification.sub_process[0] &&
+                  specification.sub_process[0].process.map((process) => (
+                    <tr key={process.order}>
+                      <td className="px-4 py-3">{process.order}</td>
+                      <td className="px-4 py-3">{process.material.name}</td>
+                      <td className="px-4 py-3">
+                        {process.min_quantity}
+                        {process.max_quantity
+                          ? `～${process.max_quantity}`
+                          : ""}
+                        {process.unit}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-        {/* <div>
-          <h1 className="text-3xl py-2">関連資料</h1>
-          <hr />
-          <ul>
-          {specification.document && specification.document.map((doc) => (
-              <li key={doc.id}>
-
-              </li>
-          ))}
+        {/* document */}
+        <div>
+          <div className="py-10">
+            <h2 className="text-2xl">関連資料</h2>
+            <hr />
+          </div>
+          <ul className="list-disc px-4">
+            {specification.document &&
+              specification.document.map((doc) => (
+                <li key={doc.category}>
+                  <a className="hover:text-blue-500" href={doc.file}>
+                    {doc.category}
+                  </a>
+                </li>
+              ))}
           </ul>
-        </div> */}
+        </div>
       </div>
     </Layout>
   );
