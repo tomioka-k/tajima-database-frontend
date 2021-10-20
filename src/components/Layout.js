@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Layout({ children, title = "tajima-database" }) {
   return (
@@ -8,13 +9,11 @@ export default function Layout({ children, title = "tajima-database" }) {
         <title>{title}</title>
       </Head>
       <header>
-        <nav className="bg-gray-800 w-screen">
+        <nav className="bg-black w-screen">
           <div className="flex items-center pl-8 h-14">
             <div className="flex space-x-4">
               <Link href="/">
-                <a className="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded">
-                  Home
-                </a>
+                <Image src="/tajima-logo.png" width={100} height={34.5} />
               </Link>
             </div>
           </div>

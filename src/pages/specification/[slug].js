@@ -10,7 +10,7 @@ import {
 export default function Specification({ specification }) {
   return (
     <Layout title={`${specification.name} | 防水仕様`}>
-      <div className="md:container lg:max-w-4xl w-50 px-50 py-10 mx-auto">
+      <div className="sm:container lg:max-w-4xl w-50 px-50 py-10 mx-auto">
         <h1 className="text-3xl">仕様情報</h1>
         {/* breadcrumb */}
         <div className="text-gray-400 no-underline">
@@ -18,7 +18,7 @@ export default function Specification({ specification }) {
             <ol className="list-reset py-2 flex">
               <li className="px-2">
                 <Link href="/">
-                  <a className="hover:text-black">Home</a>
+                  <a className="hover:text-black">トップページ</a>
                 </Link>
               </li>
               <li>{">"}</li>
@@ -32,16 +32,18 @@ export default function Specification({ specification }) {
             </ol>
           </nav>
         </div>
-        <hr className="py-4" />
+        <hr />
+        <div className="py-4">
+          <p className="text-md text-black py-2">{`${specification.method.name} - ${specification.method.normalize_name}`}</p>
+        </div>
         {/* image */}
         <div className="flex justify-center">
           <Image src={specification.image} width={640} height={360} />
         </div>
-        <div className="py-2">
-          <h1 className="text-4xl">{specification.name}</h1>
-          <p className="text-gray-500">{specification.method_name}</p>
+        <div className="py-5">
+          <h1 className="inline text-4xl">{specification.name}</h1>
+          <p className="inline  px-5">{`- ${specification.method_name} -`}</p>
         </div>
-        <br />
         <p>{specification.description}</p>
         {/* basic-infomation */}
         <Heading2 title="基本情報" />
