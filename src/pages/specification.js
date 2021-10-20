@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import SpecificationCard from "../components/SpecificationCard";
+import SpecificationCard from "../components/specification/SpecificationCard";
 import { getAllSpecificationsData } from "../lib/specification";
 
 export default function Specification({ specifications }) {
