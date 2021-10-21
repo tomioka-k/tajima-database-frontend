@@ -54,3 +54,9 @@ export async function getAllMethodsData() {
   const methods = await res.json();
   return methods;
 }
+
+export async function getAllBasesData() {
+  const res = await fetch(new URL(`${apiUrl}api/database/base/`));
+  const bases = await res.json();
+  return bases;
+}

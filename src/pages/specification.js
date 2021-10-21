@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import {
   apiUrl,
+  getAllBasesData,
   getAllMethodCategoriesData,
   getAllMethodsData,
 } from "../lib/specification";
@@ -26,6 +27,7 @@ export default function Specification({
   specifications,
   methodCategories,
   methods,
+  bases,
 }) {
   const router = useRouter();
   const [params, setParams] = useState(initialState);
@@ -45,15 +47,16 @@ export default function Specification({
     <Layout title="仕様検索">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap">
-          <div className="lg:w-1/4 bg-gray-200">
+          <div className="lg:w-1/5 bg-gray-200">
             <SearchInput
               params={params}
               setParams={setParams}
               methodCategories={methodCategories}
               methods={methods}
+              bases={bases}
             />
           </div>
-          <div className="lg:w-3/4">
+          <div className="lg:w-4/5">
             <div className="flex flex-wrap -m-4">
               {specifications_list &&
                 specifications_list.map((specification) => (
@@ -73,7 +76,8 @@ export async function getStaticProps() {
   const specifications = await getAllSpecificationsData();
   const methodCategories = await getAllMethodCategoriesData();
   const methods = await getAllMethodsData();
+  const bases = await getAllBasesData();
   return {
-    props: { specifications, methodCategories, methods },
+    props: { specifications, methodCategories, methods, bases },
   };
 }

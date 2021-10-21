@@ -1,7 +1,13 @@
 import React from "react";
 import { getAllMethodCategoriesData } from "../../lib/specification";
 
-const SearchInput = ({ params, setParams, methodCategories, methods }) => {
+const SearchInput = ({
+  params,
+  setParams,
+  methodCategories,
+  methods,
+  bases,
+}) => {
   const { name, method, method_category, base, paste, walk, is_insulation } =
     params;
 
@@ -115,6 +121,30 @@ const SearchInput = ({ params, setParams, methodCategories, methods }) => {
             />
             <span className="ml-2">無</span>
           </label>
+        </div>
+      </div>
+      {/* bases */}
+      <div className="py-2">
+        <div className="block">
+          <span className="block text-gray-700 text-sm font-bold mb-2">
+            下地
+          </span>
+          <div className="mt-2">
+            {bases.map((ba) => (
+              <div key={ba.id}>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    className="form-radio"
+                    value={ba.id}
+                    onChange={() => setParams({ ...params, base: ba.id })}
+                    checked={base === ba.id ? true : false}
+                  />
+                  <span className="ml-2">{ba.name}</span>
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
