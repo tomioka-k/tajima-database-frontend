@@ -5,7 +5,6 @@ import Heading2 from "../../components/Heading2";
 import {
   PasteTag,
   InsulationTag,
-  walk,
   WalkTag,
 } from "../../components/specification/Tag";
 import {
