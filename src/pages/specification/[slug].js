@@ -44,7 +44,7 @@ export default function Specification({ specification }) {
         {/* image */}
         <div className="flex justify-center">
           {specification.image ? (
-            <Image src={specification.image} width={640} height={360} />
+            <Image src={specification.image} width={1280} height={720} />
           ) : null}
         </div>
         <div className="py-5">

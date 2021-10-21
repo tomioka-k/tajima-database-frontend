@@ -42,3 +42,15 @@ export async function getSpecificationData(slug) {
 
   return result;
 }
+
+export async function getAllMethodCategoriesData() {
+  const res = await fetch(new URL(`${apiUrl}api/database/method-category/`));
+  const methodCategories = await res.json();
+  return methodCategories;
+}
+
+export async function getAllMethodsData() {
+  const res = await fetch(new URL(`${apiUrl}api/database/method/`));
+  const methods = await res.json();
+  return methods;
+}

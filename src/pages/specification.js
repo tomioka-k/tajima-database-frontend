@@ -1,43 +1,57 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { apiUrl } from "../lib/specification";
+import {
+  apiUrl,
+  getAllMethodCategoriesData,
+  getAllMethodsData,
+} from "../lib/specification";
 import Layout from "../components/Layout";
+import SearchInput from "../components/specification/SearchInput";
 import SpecificationCard from "../components/specification/SpecificationCard";
 import { getAllSpecificationsData } from "../lib/specification";
 import { useEffect, useState } from "react";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
+const initialState = {
+  name: "",
+  method: "",
+  methodCategory: "",
+  base: "",
+  paste: "",
+  walk: "",
+  is_insulation: null,
+};
 
-export default function Specification({ specifications }) {
+export default function Specification({
+  specifications,
+  methodCategories,
+  methods,
+}) {
   const router = useRouter();
-  const [name, setName] = useState("");
+  const [params, setParams] = useState(initialState);
   const { data: specifications_list, mutate } = useSWR(
-    `${apiUrl}api/database/specification/?name=${name}`,
+    `${apiUrl}api/database/specification/?name=${params.name}&method__category=${params.methodCategory}&method=${params.method}&is_insulation=${params.is_insulation}`,
     fetcher,
     {
       fallbackData: specifications,
     }
   );
 
-  const handleInputSearch = (e) => {
-    setName(e.target.value);
-    mutate();
-  };
-  if (router.isFallback) {
-    return <div>...Loading</div>;
-  }
+  // useEffect(() => {
+  //   mutate();
+  // }, [params]);
 
   return (
     <Layout title="仕様検索">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap">
-          <div className="lg:w-1/4">
-            <input
-              type="text"
-              placeholder="仕様名"
-              value={name}
-              onChange={handleInputSearch}
-            ></input>
+          <div className="lg:w-1/4 bg-gray-200">
+            <SearchInput
+              params={params}
+              setParams={setParams}
+              methodCategories={methodCategories}
+              methods={methods}
+            />
           </div>
           <div className="lg:w-3/4">
             <div className="flex flex-wrap -m-4">
@@ -57,7 +71,9 @@ export default function Specification({ specifications }) {
 
 export async function getStaticProps() {
   const specifications = await getAllSpecificationsData();
+  const methodCategories = await getAllMethodCategoriesData();
+  const methods = await getAllMethodsData();
   return {
-    props: { specifications },
+    props: { specifications, methodCategories, methods },
   };
 }
