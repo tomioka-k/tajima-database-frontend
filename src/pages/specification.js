@@ -31,13 +31,20 @@ export default function Specification({
 }) {
   const router = useRouter();
   const [params, setParams] = useState(initialState);
-  const { data: specifications_list, mutate } = useSWR(
-    `${apiUrl}api/database/specification/?name=${params.name}&method__category=${params.methodCategory}&method=${params.method}&is_insulation=${params.is_insulation}`,
-    fetcher,
-    {
-      fallbackData: specifications,
-    }
-  );
+  const fetchURL =
+    `${apiUrl}api/database/specification/?` +
+    new URLSearchParams({
+      name: params.name,
+      method: params.method,
+      method__category: params.methodCategory,
+      paste: params.paste,
+      walk: params.walk,
+      is_insulation: params.is_insulation,
+    });
+
+  const { data: specifications_list, mutate } = useSWR(fetchURL, fetcher, {
+    fallbackData: "",
+  });
 
   // useEffect(() => {
   //   mutate();
@@ -47,7 +54,7 @@ export default function Specification({
     <Layout title="仕様検索">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap">
-          <div className="lg:w-1/5 bg-gray-200">
+          <div className="lg:w-1/5">
             <SearchInput
               params={params}
               setParams={setParams}
@@ -58,12 +65,17 @@ export default function Specification({
           </div>
           <div className="lg:w-4/5">
             <div className="flex flex-wrap -m-4">
-              {specifications_list &&
-                specifications_list.map((specification) => (
+              {specifications_list ? (
+                specifications_list?.map((specification) => (
                   <div key={specification.id} className="p-4 md:w-1/3">
                     <SpecificationCard specification={specification} />
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className="flex justify-center w-full">
+                  <div className="w-40 h-40 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
+                </div>
+              )}
             </div>
           </div>
         </div>

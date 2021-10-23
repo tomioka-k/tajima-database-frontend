@@ -19,7 +19,7 @@ const SearchInput = ({
     <div className="w-full max-w-xs">
       {/* name */}
       <div className="py-2">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+        <label className="block text-gray-700 text-lg font-bold mb-2">
           仕様番号
         </label>
         <input
@@ -32,7 +32,7 @@ const SearchInput = ({
       </div>
       {/* method-category */}
       <div className="py-2">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+        <label className="block text-gray-700 text-lg font-bold mb-2">
           工法
         </label>
         <div className="inline-block relative w-full">
@@ -61,7 +61,7 @@ const SearchInput = ({
       </div>
       {/* method */}
       <div className="py-2">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+        <label className="block text-gray-700 text-lg font-bold mb-2">
           製品
         </label>
         <div className="inline-block relative w-full">
@@ -90,43 +90,49 @@ const SearchInput = ({
       </div>
       {/* insulation */}
       <div className="py-2">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          断熱材
-        </label>
-        <div className="mt-2">
-          <label className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio"
-              onChange={() => setParams({ ...params, is_insulation: null })}
-              checked={is_insulation === null ? true : false}
-            />
-            <span className="ml-2">全て</span>
-          </label>
-          <label className="inline-flex items-center ml-6">
-            <input
-              type="radio"
-              className="form-radio"
-              onChange={() => setParams({ ...params, is_insulation: true })}
-              checked={is_insulation}
-            />
-            <span className="ml-2">有</span>
-          </label>
-          <label className="inline-flex items-center ml-6">
-            <input
-              type="radio"
-              className="form-radio"
-              onChange={() => setParams({ ...params, is_insulation: false })}
-              checked={is_insulation === false ? true : false}
-            />
-            <span className="ml-2">無</span>
-          </label>
+        <div className="block">
+          <span className="block text-gray-700 text-lg font-bold mb-2">
+            断熱材
+          </span>
+          <div className="mt-2">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                className="form-radio"
+                onChange={() => setParams({ ...params, is_insulation: null })}
+                checked={is_insulation === null ? true : false}
+              />
+              <span className="ml-2">全て</span>
+            </label>
+          </div>
+          <div className="mt-2">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                className="form-radio"
+                onChange={() => setParams({ ...params, is_insulation: true })}
+                checked={is_insulation}
+              />
+              <span className="ml-2">有</span>
+            </label>
+          </div>
+          <div className="mt-2">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                className="form-radio"
+                onChange={() => setParams({ ...params, is_insulation: false })}
+                checked={is_insulation === false ? true : false}
+              />
+              <span className="ml-2">無</span>
+            </label>
+          </div>
         </div>
       </div>
       {/* bases */}
       <div className="py-2">
         <div className="block">
-          <span className="block text-gray-700 text-sm font-bold mb-2">
+          <span className="block text-gray-700 text-lg font-bold mb-2">
             下地
           </span>
           <div className="mt-2">
