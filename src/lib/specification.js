@@ -49,8 +49,28 @@ export async function getAllMethodCategoriesData() {
   return methodCategories;
 }
 
+export async function getAllMethodCategoriesIds() {
+  const res = await fetch(new URL(`${apiUrl}api/database/method-category/`));
+  const methodCategories = await res.json();
+  return methodCategories.map((methodCategory) => {
+    return {
+      params: {
+        slug: String(methodCategory.slug),
+      },
+    };
+  });
+}
+
 export async function getAllMethodsData() {
   const res = await fetch(new URL(`${apiUrl}api/database/method/`));
+  const methods = await res.json();
+  return methods;
+}
+
+export async function getMethodsData(slug) {
+  const res = await fetch(
+    new URL(`${apiUrl}api/database/method/?category__slug=${slug}`)
+  );
   const methods = await res.json();
   return methods;
 }

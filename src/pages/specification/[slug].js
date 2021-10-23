@@ -15,7 +15,7 @@ import {
 export default function Specification({ specification }) {
   return (
     <Layout title={`${specification.name} | 防水仕様`}>
-      <div className="sm:container lg:max-w-4xl w-50 px-50 py-10 mx-auto">
+      <div className="">
         <h1 className="text-3xl">仕様情報</h1>
         {/* breadcrumb */}
         <div className="text-gray-400 no-underline">

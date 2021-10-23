@@ -23,7 +23,7 @@ const initialState = {
   is_insulation: null,
 };
 
-export default function Specification({
+export default function SpecificationSearch({
   specifications,
   methodCategories,
   methods,
