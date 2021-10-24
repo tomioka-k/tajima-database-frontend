@@ -2,10 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Layout from "../components/Layout";
 import BreadCrumbs from "../components/breadcrumbs";
-import Heading2 from "../components/Heading2";
-import MethodCategoryCard from "../components/products/MethodCategoryCard";
+import { Heading2 } from "../components/Heading";
+import MethodCategoryImage from "../components/products/MethodCategoryImage";
 
 import { getAllMethodCategoriesData } from "../lib/specification";
+import { Container } from "postcss";
 
 export default function Products({ methodCategories }) {
   return (
@@ -18,12 +19,21 @@ export default function Products({ methodCategories }) {
             { string: "製品情報", path: "/products" },
           ]}
         />
-        <div className="p-7">
+        <div className="w-full flex flex-wrap gap-5 py-8">
           {methodCategories.map((category) => (
             <>
-              <div className="py-2">
-                <MethodCategoryCard key={category.id} category={category} />
-              </div>
+              <Link href={`/products/${category.slug}`}>
+                <div
+                  className="w-full md:w-1/3 lg:1/3 bg-gray-100 h-64 hover:opacity-70 items-center"
+                  style={{
+                    backgroundImage: `url(${category.image})`,
+                    width: "360px",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <MethodCategoryImage key={category.id} category={category} />
+                </div>
+              </Link>
             </>
           ))}
         </div>

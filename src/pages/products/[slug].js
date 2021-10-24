@@ -2,13 +2,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import { getAllMethodCategoriesIds } from "../../lib/specification";
+import {
+  getAllMethodCategoriesIds,
+  getMethodCategoryData,
+} from "../../lib/specification";
 import { getMethodsData } from "../../lib/specification";
 import Layout from "../../components/Layout";
-import Heading2 from "../../components/Heading2";
+import { Heading2, Heading3 } from "../../components/Heading";
 import BreadCrumbs from "../../components/breadcrumbs";
+import MethodCard from "../../components/products/MethodCard";
 
-export default function ProductsDetail({ methods }) {
+export default function ProductsDetail({ methods, categoryMethod }) {
   const router = useRouter();
   if (!methods[0]) {
     return "Not Found";
@@ -25,9 +29,19 @@ export default function ProductsDetail({ methods }) {
             { string: `${methods[0].category}`, path: `${router.asPath}` },
           ]}
         />
-        {methods.map((method) => (
-          <li key={method.slug}>{method.name}</li>
-        ))}
+        <div className="p-10 flex justify-center">
+          <Image src={categoryMethod[0].image} width={720} height={480} />
+        </div>
+        <Heading3 title="特長" />
+        <div className="text-lg leading-loose">
+          {categoryMethod[0].description}
+        </div>
+        <Heading3 title="工法一覧" />
+        <div className="flex w-full">
+          {methods.map((method) => (
+            <MethodCard key={method.slug} method={method} />
+          ))}
+        </div>
       </Layout>
     </div>
   );
@@ -43,9 +57,11 @@ export async function getStaticPaths() {
 }
 export async function getStaticProps({ params }) {
   const methods = await getMethodsData(params.slug);
+  const categoryMethod = await getMethodCategoryData(params.slug);
   return {
     props: {
       methods,
+      categoryMethod,
     },
   };
 }

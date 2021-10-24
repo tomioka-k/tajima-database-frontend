@@ -7,6 +7,8 @@ import {
   getAllMethodsData,
 } from "../lib/specification";
 import Layout from "../components/Layout";
+import { Heading2 } from "../components/Heading";
+import BreadCrumbs from "../components/breadcrumbs";
 import SearchInput from "../components/specification/SearchInput";
 import SpecificationCard from "../components/specification/SpecificationCard";
 import { getAllSpecificationsData } from "../lib/specification";
@@ -52,22 +54,40 @@ export default function SpecificationSearch({
 
   return (
     <Layout title="仕様検索">
-      <div className="container px-5 py-24 mx-auto">
+      <div className="">
         <div className="flex flex-wrap">
-          <div className="lg:w-1/5">
-            <SearchInput
-              params={params}
-              setParams={setParams}
-              methodCategories={methodCategories}
-              methods={methods}
-              bases={bases}
-            />
+          <div className="w-full lg:w-1/5">
+            <div className="sticky top-10">
+              <div className="text-xl text-white bg-blue-800 p-1">
+                絞り込み検索
+              </div>
+              <div className="m-3">
+                <SearchInput
+                  params={params}
+                  setParams={setParams}
+                  methodCategories={methodCategories}
+                  methods={methods}
+                  bases={bases}
+                />
+              </div>
+            </div>
           </div>
-          <div className="lg:w-4/5">
-            <div className="flex flex-wrap -m-4">
+          <div className="w-full lg:w-4/5 pl-5">
+            <Heading2 title="製品情報" />
+            <BreadCrumbs
+              lists={[
+                { string: "TOP", path: "/" },
+                { string: "製品情報", path: "/products" },
+              ]}
+            />
+            <div className="">sample</div>
+            <div className="flex flex-wrap">
               {specifications_list ? (
                 specifications_list?.map((specification) => (
-                  <div key={specification.id} className="p-4 md:w-1/3">
+                  <div
+                    key={specification.id}
+                    className="p-4 w-full md:w-1/2 lg:w-1/3"
+                  >
                     <SpecificationCard specification={specification} />
                   </div>
                 ))

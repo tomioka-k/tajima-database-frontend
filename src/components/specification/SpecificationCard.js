@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function SpecificationCard({ specification }) {
   return (
-    <div>
+    <div className="border-gray-200 shadow-lg">
       <Link href={`/specification/${specification.slug}`}>
         <div className="h-full hover:bg-gray-100 hover:shadow-sm hover:border-transparent border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
           <div className="lg:h-48 md:h-36 w-full object-cover object-center">

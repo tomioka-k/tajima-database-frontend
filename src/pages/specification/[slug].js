@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Layout from "../../components/Layout";
-import Heading2 from "../../components/Heading2";
+import { Heading2, Heading3 } from "../../components/Heading";
 import {
   PasteTag,
   InsulationTag,
@@ -11,32 +11,23 @@ import {
   getAllSpecificationIds,
   getSpecificationData,
 } from "../../lib/specification";
+import BreadCrumbs from "../../components/breadcrumbs";
 
 export default function Specification({ specification }) {
   return (
     <Layout title={`${specification.name} | 防水仕様`}>
       <div className="">
-        <h1 className="text-3xl">仕様情報</h1>
-        {/* breadcrumb */}
-        <div className="text-gray-400 no-underline">
-          <nav>
-            <ol className="list-reset py-2 flex">
-              <li className="px-2">
-                <Link href="/">
-                  <a className="hover:text-black">トップページ</a>
-                </Link>
-              </li>
-              <li>{">"}</li>
-              <li className="px-2 hover:text-black">
-                <Link href="/specification">
-                  <a>仕様一覧</a>
-                </Link>
-              </li>
-              <li>{">"}</li>
-              <li className="px-2">{specification.name}</li>
-            </ol>
-          </nav>
-        </div>
+        <Heading2 title={specification.name} />
+        <BreadCrumbs
+          lists={[
+            { string: "TOP", path: "/" },
+            { string: "仕様一覧", path: "/specification" },
+            {
+              string: `${specification.name}`,
+              path: `/specification/${specification.slug}`,
+            },
+          ]}
+        />
         <hr />
         <div className="py-4">
           <p className="text-md text-black py-2">{`${specification.method.name} - ${specification.method.normalize_name}`}</p>
@@ -53,7 +44,7 @@ export default function Specification({ specification }) {
         </div>
         <p>{specification.description}</p>
         {/* basic-infomation */}
-        <Heading2 title="基本情報" />
+        <Heading3 title="基本情報" />
         <table className="table-auto w-full mx-auto text-left border-b-2 whitespace-no-wrap">
           <tbody>
             <tr className="bg-gray-100">
@@ -111,7 +102,7 @@ export default function Specification({ specification }) {
           </tbody>
         </table>
         {/* process */}
-        <Heading2 title="工程" />
+        <Heading3 title="工程" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="">
             <p className="bg-gray-200 border-2 px-4 py-2">{`${specification.part}：${specification.name}`}</p>
@@ -188,7 +179,7 @@ export default function Specification({ specification }) {
         {/* document */}
 
         <div>
-          <Heading2 title="関連資料" />
+          <Heading3 title="関連資料" />
           <ul className="list-disc px-4">
             {specification.document &&
               specification.document.map((doc) => (

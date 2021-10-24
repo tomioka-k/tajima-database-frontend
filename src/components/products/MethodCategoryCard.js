@@ -29,7 +29,7 @@ export default function MethodCategoryCard({ category }) {
               </button>
             </div>
           </div>
-          <div className="w-full lg:w-1/3">
+          <div className="w-full lg:w-1/3 object-center">
             {category.image ? (
               <Image src={category.image} width={640} height={480} />
             ) : (
