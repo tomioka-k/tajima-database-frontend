@@ -35,9 +35,10 @@ export const PasteTag = ({ paste }) => {
 
 export const WalkTag = ({ walk }) => {
   switch (walk) {
-    case "歩行" || "軽歩行":
+    case "歩行":
+    case "軽歩行":
       return (
-        <span className="bg-white border-2 border-gray-900 font-semibold rounded-lg px-2 py-1">
+        <span className="bg-white border-2 border-black font-semibold rounded-lg px-2 py-1">
           {walk}
         </span>
       );

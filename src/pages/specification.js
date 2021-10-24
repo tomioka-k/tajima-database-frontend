@@ -7,12 +7,13 @@ import {
   getAllMethodsData,
 } from "../lib/specification";
 import Layout from "../components/Layout";
-import { Heading2 } from "../components/Heading";
+import { Heading2, Heading3 } from "../components/Heading";
 import BreadCrumbs from "../components/breadcrumbs";
 import SearchInput from "../components/specification/SearchInput";
 import SpecificationCard from "../components/specification/SpecificationCard";
 import { getAllSpecificationsData } from "../lib/specification";
 import { useEffect, useState } from "react";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 const initialState = {
@@ -49,8 +50,8 @@ export default function SpecificationSearch({
   });
 
   // useEffect(() => {
-  //   mutate();
-  // }, [params]);
+
+  // }, [specifications_list]);
 
   return (
     <Layout title="仕様検索">
@@ -61,6 +62,7 @@ export default function SpecificationSearch({
               <div className="text-xl text-white bg-blue-800 p-1">
                 絞り込み検索
               </div>
+
               <div className="m-3">
                 <SearchInput
                   params={params}
@@ -73,14 +75,14 @@ export default function SpecificationSearch({
             </div>
           </div>
           <div className="w-full lg:w-4/5 pl-5">
-            <Heading2 title="製品情報" />
+            <Heading2 title="仕様検索" />
             <BreadCrumbs
               lists={[
                 { string: "TOP", path: "/" },
-                { string: "製品情報", path: "/products" },
+                { string: "仕様検索", path: "" },
               ]}
             />
-            <div className="">sample</div>
+            <div className="p-2">{"sample"}</div>
             <div className="flex flex-wrap">
               {specifications_list ? (
                 specifications_list?.map((specification) => (
@@ -92,9 +94,7 @@ export default function SpecificationSearch({
                   </div>
                 ))
               ) : (
-                <div className="flex justify-center w-full">
-                  <div className="w-40 h-40 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
-                </div>
+                <LinearProgress />
               )}
             </div>
           </div>
