@@ -11,6 +11,10 @@ const SearchInput = ({
   const { name, method, method_category, base, paste, walk, is_insulation } =
     params;
 
+  const selectedMethods = methods.filter((method) => {
+    return method.category_slug === method_category;
+  });
+
   const handleInputSearch = (e) => {
     setParams({ ...params, [e.target.name]: e.target.value });
   };
@@ -71,7 +75,7 @@ const SearchInput = ({
             className="appearance-none w-full px-3 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
           >
             <option></option>
-            {methods.map((method) => (
+            {selectedMethods.map((method) => (
               <option key={method.id} value={method.id}>
                 {method.name}
               </option>
