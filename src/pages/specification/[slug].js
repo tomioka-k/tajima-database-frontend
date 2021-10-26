@@ -16,7 +16,7 @@ import BreadCrumbs from "../../components/breadcrumbs";
 export default function Specification({ specification }) {
   return (
     <Layout title={`${specification.name} | 防水仕様`}>
-      <div className="max-w-6xl mx-auto">
+      <div className="container max-w-6xl mx-auto">
         <Heading2 title="仕様一覧" />
         <BreadCrumbs
           lists={[
@@ -29,36 +29,20 @@ export default function Specification({ specification }) {
           ]}
         />
         <hr />
-        <div className="py-2">
+        <div className="pt-8">
           <div className="py-2">
             <h1 className="inline text-5xl">{specification.name}</h1>
             <p className="inline text-2xl px-3">{`- ${specification.method_name} -`}</p>
           </div>
           <p className="text-sm text-gray-500">{`${specification.method.name} - ${specification.method.normalize_name}`}</p>
-          <p className="py-5">{specification.description}</p>
+          <p className="pt-8 text-lg">{specification.description}</p>
         </div>
-        {/* image */}
-        <div className="flex flex-reverse content-center items-center gap-3 py-5">
+        {/* basic-infomation */}
+        <div className="flex flex-wrap-reverse lg:flex-nowrap content-center items-center gap-3 py-5">
           <div className="w-full lg:w-1/3">
             <table className="table-auto w-full mx-auto border border-collapse text-left whitespace-no-wrap">
               <tbody>
                 <tr className="bg-gray-100">
-                  <th className="px-4 py-3 tracking-wider">基本情報</th>
-                  <td>
-                    <div className="inline px-1">
-                      <InsulationTag
-                        is_insulation={specification.is_insulation}
-                      />
-                    </div>
-                    <div className="inline px-1">
-                      <PasteTag paste={specification.paste} />
-                    </div>
-                    <div className="inline px-1">
-                      <WalkTag walk={specification.walk} />
-                    </div>
-                  </td>
-                </tr>
-                <tr className="">
                   <th className="px-4 py-3 tracking-wider">適用下地</th>
                   <td>
                     {specification.base && (
@@ -68,6 +52,26 @@ export default function Specification({ specification }) {
                         ))}
                       </ul>
                     )}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="px-4 py-3 tracking-wider">断熱</th>
+                  <td>
+                    <InsulationTag
+                      is_insulation={specification.is_insulation}
+                    />
+                  </td>
+                </tr>
+                <tr className="bg-gray-100">
+                  <th className="px-4 py-3 tracking-wider">貼り方</th>
+                  <td>
+                    <PasteTag paste={specification.paste} />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="px-4 py-3 tracking-wider">歩行</th>
+                  <td>
+                    <WalkTag walk={specification.walk} />
                   </td>
                 </tr>
                 <tr className="bg-gray-100">
@@ -108,14 +112,16 @@ export default function Specification({ specification }) {
           </div>
         </div>
         {/* process */}
-        <Heading3 title="工程" />
+        <div className="pb-10">
+          <Heading3 title="工程" />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="">
-            <p className="bg-gray-200 border-2 px-4 py-2">{`${specification.part}：${specification.name}`}</p>
+          <div className="pb-8">
+            <span className="p-2 bg-blue-500 text-gray-100 font-bold rounded-sm">{`${specification.part} - ${specification.name}`}</span>
             <table className="table-auto w-full mx-auto text-left border-2 whitespace-no-wrap">
               <thead>
                 <tr>
-                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                     工程
                   </th>
                   <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
@@ -130,7 +136,7 @@ export default function Specification({ specification }) {
                 {specification.process &&
                   specification.process.map((process) => (
                     <tr key={process.order}>
-                      <td className="px-4 py-3">{process.order}</td>
+                      <th className="px-4 py-3 font-bold">{process.order}</th>
                       <td className="px-4 py-3">{process.material.name}</td>
                       <td className="px-4 py-3">
                         {process.min_quantity}
@@ -146,8 +152,8 @@ export default function Specification({ specification }) {
           </div>
           {/* sub_process */}
           {specification.sub_process[0] ? (
-            <div className="">
-              <p className="border-2 px-4 py-2">{`${specification.sub_process[0]?.part}：${specification.sub_process[0]?.name}`}</p>
+            <div className="pb-8">
+              <span className="p-2 bg-blue-500 text-gray-100 font-bold rounded-sm">{`${specification.sub_process[0].part} - ${specification.sub_process[0].name}`}</span>
               <table className="table-auto w-full mx-auto text-left border-2 whitespace-no-wrap">
                 <thead>
                   <tr>
