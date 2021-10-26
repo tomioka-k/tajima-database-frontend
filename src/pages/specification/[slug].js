@@ -191,17 +191,26 @@ export default function Specification({ specification }) {
         {/* document */}
 
         <div>
-          <Heading3 title="関連資料" />
-          <ul className="list-disc px-4">
+          <div className="pb-10">
+            <Heading3 title="関連資料" />
+          </div>
+          <div className="flex flex-wrap gap-7 p-3">
             {specification.document &&
               specification.document.map((doc) => (
-                <li key={doc.category}>
-                  <a className="hover:text-blue-500" href={doc.file}>
-                    {doc.category}
+                <Link href={doc.file} key={doc.category}>
+                  <a className="bg-gray-100 text-lg text-gray-800 font-bold hover:bg-blue-400 hover:text-white  p-7 border border-blue-500 border-8 rounded inline-flex items-center">
+                    <svg
+                      className="fill-current w-4 h-4 mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>{doc.category}</span>
                   </a>
-                </li>
+                </Link>
               ))}
-          </ul>
+          </div>
         </div>
       </div>
     </Layout>
