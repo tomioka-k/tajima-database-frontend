@@ -16,8 +16,8 @@ import BreadCrumbs from "../../components/breadcrumbs";
 export default function Specification({ specification }) {
   return (
     <Layout title={`${specification.name} | 防水仕様`}>
-      <div className="">
-        <Heading2 title={specification.name} />
+      <div className="max-w-6xl mx-auto">
+        <Heading2 title="仕様一覧" />
         <BreadCrumbs
           lists={[
             { string: "TOP", path: "/" },
@@ -29,78 +29,84 @@ export default function Specification({ specification }) {
           ]}
         />
         <hr />
-        <div className="py-4">
-          <p className="text-md text-black py-2">{`${specification.method.name} - ${specification.method.normalize_name}`}</p>
+        <div className="py-2">
+          <div className="py-2">
+            <h1 className="inline text-5xl">{specification.name}</h1>
+            <p className="inline text-2xl px-3">{`- ${specification.method_name} -`}</p>
+          </div>
+          <p className="text-sm text-gray-500">{`${specification.method.name} - ${specification.method.normalize_name}`}</p>
+          <p className="py-5">{specification.description}</p>
         </div>
         {/* image */}
-        <div className="flex justify-center">
-          {specification.image ? (
-            <Image src={specification.image} width={1280} height={720} />
-          ) : null}
+        <div className="flex flex-reverse content-center items-center gap-3 py-5">
+          <div className="w-full lg:w-1/3">
+            <table className="table-auto w-full mx-auto border border-collapse text-left whitespace-no-wrap">
+              <tbody>
+                <tr className="bg-gray-100">
+                  <th className="px-4 py-3 tracking-wider">基本情報</th>
+                  <td>
+                    <div className="inline px-1">
+                      <InsulationTag
+                        is_insulation={specification.is_insulation}
+                      />
+                    </div>
+                    <div className="inline px-1">
+                      <PasteTag paste={specification.paste} />
+                    </div>
+                    <div className="inline px-1">
+                      <WalkTag walk={specification.walk} />
+                    </div>
+                  </td>
+                </tr>
+                <tr className="">
+                  <th className="px-4 py-3 tracking-wider">適用下地</th>
+                  <td>
+                    {specification.base && (
+                      <ul>
+                        {specification.base.map((base) => (
+                          <li key={base}>{base}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </td>
+                </tr>
+                <tr className="bg-gray-100">
+                  <th className="px-4 py-3 tracking-wider">適正勾配</th>
+                  <td>{specification.slope ? specification.slope : ""}</td>
+                </tr>
+                <tr>
+                  <th className="px-4 py-3 tracking-wider">防水重量目安</th>
+                  <td>
+                    {specification.weight ? `${specification.weight}kg/㎡` : ""}
+                  </td>
+                </tr>
+                <tr className="bg-gray-100">
+                  <th className="px-4 py-3 tracking-wider">厚み</th>
+                  <td>
+                    {specification.thickness
+                      ? `約${specification.thickness}mm`
+                      : ""}
+                  </td>
+                </tr>
+                <tr>
+                  <th className="px-4 py-3 tracking-wider">基本耐用年数</th>
+                  <td>
+                    {specification.service_life
+                      ? `${specification.service_life}年`
+                      : ""}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="w-full lg:w-2/3">
+            <div className="flex justify-center">
+              {specification.image ? (
+                <Image src={specification.image} width={1280} height={720} />
+              ) : null}
+            </div>
+          </div>
         </div>
-        <div className="py-5">
-          <h1 className="inline text-4xl">{specification.name}</h1>
-          <p className="inline  px-5">{`- ${specification.method_name} -`}</p>
-        </div>
-        <p>{specification.description}</p>
-        {/* basic-infomation */}
-        <Heading3 title="基本情報" />
-        <table className="table-auto w-full mx-auto text-left border-b-2 whitespace-no-wrap">
-          <tbody>
-            <tr className="bg-gray-100">
-              <th className="px-4 py-3 tracking-wider">基本性能</th>
-              <td>
-                <div className="inline px-1">
-                  <InsulationTag is_insulation={specification.is_insulation} />
-                </div>
-                <div className="inline px-1">
-                  <PasteTag paste={specification.paste} />
-                </div>
-                <div className="inline px-1">
-                  <WalkTag walk={specification.walk} />
-                </div>
-              </td>
-            </tr>
-            <tr className="">
-              <th className="px-4 py-3 tracking-wider">適用下地</th>
-              <td>
-                {specification.base && (
-                  <ul>
-                    {specification.base.map((base) => (
-                      <li key={base}>{base}</li>
-                    ))}
-                  </ul>
-                )}
-              </td>
-            </tr>
-            <tr className="bg-gray-100">
-              <th className="px-4 py-3 tracking-wider">適正勾配</th>
-              <td>{specification.slope ? specification.slope : ""}</td>
-            </tr>
-            <tr>
-              <th className="px-4 py-3 tracking-wider">防水重量目安</th>
-              <td>
-                {specification.weight ? `${specification.weight}kg/㎡` : ""}
-              </td>
-            </tr>
-            <tr className="bg-gray-100">
-              <th className="px-4 py-3 tracking-wider">厚み</th>
-              <td>
-                {specification.thickness
-                  ? `約${specification.thickness}mm`
-                  : ""}
-              </td>
-            </tr>
-            <tr>
-              <th className="px-4 py-3 tracking-wider">基本耐用年数</th>
-              <td>
-                {specification.service_life
-                  ? `${specification.service_life}年`
-                  : ""}
-              </td>
-            </tr>
-          </tbody>
-        </table>
         {/* process */}
         <Heading3 title="工程" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

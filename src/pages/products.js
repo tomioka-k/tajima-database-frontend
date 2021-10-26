@@ -11,7 +11,7 @@ import { Container } from "postcss";
 export default function Products({ methodCategories }) {
   return (
     <Layout title="製品情報">
-      <div>
+      <div className="max-w-6xl mx-auto">
         <Heading2 title="製品情報" />
         <BreadCrumbs
           lists={[
@@ -19,9 +19,9 @@ export default function Products({ methodCategories }) {
             { string: "製品情報", path: "/products" },
           ]}
         />
-        <div className="w-full flex flex-wrap gap-5 py-8">
+        <div className="flex flex-wrap gap-5 py-8">
           {methodCategories.map((category) => (
-            <>
+            <div key={category.id}>
               <Link href={`/products/${category.slug}`}>
                 <div
                   className="w-full md:w-1/3 lg:1/3 bg-gray-100 h-64 hover:opacity-70 items-center"
@@ -31,10 +31,10 @@ export default function Products({ methodCategories }) {
                     backgroundSize: "cover",
                   }}
                 >
-                  <MethodCategoryImage key={category.id} category={category} />
+                  <MethodCategoryImage category={category} />
                 </div>
               </Link>
-            </>
+            </div>
           ))}
         </div>
       </div>

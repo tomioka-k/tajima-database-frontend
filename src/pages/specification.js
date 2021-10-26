@@ -54,12 +54,12 @@ export default function SpecificationSearch({
   // }, [specifications_list]);
 
   return (
-    <Layout title="仕様検索">
+    <Layout title="仕様一覧">
       <div className="">
         <div className="flex flex-wrap">
           <div className="w-full lg:w-1/5">
             <div className="sticky top-10">
-              <div className="text-xl text-white bg-blue-800 p-1">
+              <div className="text-xl text-white bg-blue-800 p-1 m-1">
                 絞り込み検索
               </div>
 
@@ -75,17 +75,17 @@ export default function SpecificationSearch({
             </div>
           </div>
           <div className="w-full lg:w-4/5 pl-5">
-            <Heading2 title="仕様検索" />
+            <Heading2 title="仕様一覧" />
             <BreadCrumbs
               lists={[
                 { string: "TOP", path: "/" },
-                { string: "仕様検索", path: "" },
+                { string: "仕様一覧", path: "" },
               ]}
             />
-            <div className="p-2">{"sample"}</div>
+            <div className="p-2">{specifications_list.length}</div>
             <div className="flex flex-wrap">
               {specifications_list ? (
-                specifications_list?.map((specification) => (
+                specifications_list.map((specification) => (
                   <div
                     key={specification.id}
                     className="p-4 w-full md:w-1/2 lg:w-1/3"

@@ -8,11 +8,15 @@ const SearchInput = ({
   methods,
   bases,
 }) => {
-  const { name, method, method_category, base, paste, walk, is_insulation } =
+  const { name, method, methodCategory, base, paste, walk, is_insulation } =
     params;
 
+  const selectedMethodCategory = methodCategories.filter((mc) => {
+    return mc.id === params.methodCategory;
+  });
+
   const selectedMethods = methods.filter((method) => {
-    return method.category_slug === method_category;
+    return method.category_slug === selectedMethodCategory[0]?.slug;
   });
 
   const handleInputSearch = (e) => {
@@ -32,6 +36,7 @@ const SearchInput = ({
           type="text"
           value={name}
           onChange={handleInputSearch}
+          placeholder="例：GSS-2S"
         />
       </div>
       {/* method-category */}
@@ -45,7 +50,7 @@ const SearchInput = ({
             onChange={handleInputSearch}
             className="appearance-none w-full px-3 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option></option>
+            <option value={""}>{"---- 選択してください ----"}</option>
             {methodCategories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -74,7 +79,7 @@ const SearchInput = ({
             onChange={handleInputSearch}
             className="appearance-none w-full px-3 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option></option>
+            <option value={""}>{"---- 選択してください ----"}</option>
             {selectedMethods.map((method) => (
               <option key={method.id} value={method.id}>
                 {method.name}
