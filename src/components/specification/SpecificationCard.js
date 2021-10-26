@@ -7,22 +7,22 @@ import {
 } from "../../components/specification/Tag";
 
 export default function SpecificationCard({ specification }) {
+  const imagePath = (path) => {
+    return !path ? "/no_image_logo.png" : path;
+  };
+
   return (
     <div className="border-gray-200 shadow-lg cursor-pointer">
       <Link href={`/specification/${specification.slug}`}>
         <div className="h-full hover:bg-gray-100 hover:shadow-sm hover:border-transparent border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
           <div className="lg:h-48 md:h-36 w-full object-cover object-center">
-            {!specification.image ? (
-              ""
-            ) : (
-              <Image
-                src={specification.image}
-                alt={specification.name}
-                loading="lazy"
-                width="720"
-                height="401"
-              />
-            )}
+            <Image
+              src={imagePath(specification.image)}
+              alt={specification.name}
+              width="1280"
+              height="720"
+              objectFit={"contain"}
+            />
           </div>
 
           <div className="p-6">

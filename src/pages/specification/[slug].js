@@ -12,8 +12,29 @@ import {
   getSpecificationData,
 } from "../../lib/specification";
 import BreadCrumbs from "../../components/breadcrumbs";
+import MaterialCard from "../../components/specification/MaterialCard";
 
 export default function Specification({ specification }) {
+  const specificationProcessMerge = [
+    ...specification.process,
+    ...specification.sub_process[0].process,
+  ];
+  const materialDistinctList = specificationProcessMerge.filter(
+    (item, index, self) => {
+      const nameList = self.map((item) => item["material"]["name"]);
+      if (nameList.indexOf(item.material.name) === index) {
+        return item;
+      }
+    }
+  );
+  const materialsSortList = materialDistinctList.sort(function (a, b) {
+    return a.order - b.order;
+  });
+
+  const imagePath = (path) => {
+    return !path ? "/no_image_logo.png" : path;
+  };
+
   return (
     <Layout title={`${specification.name} | 防水仕様`}>
       <div className="container max-w-6xl mx-auto">
@@ -40,7 +61,7 @@ export default function Specification({ specification }) {
         {/* basic-infomation */}
         <div className="flex flex-wrap-reverse lg:flex-nowrap content-center items-center gap-3 py-5">
           <div className="w-full lg:w-1/3">
-            <table className="table-auto w-full mx-auto border border-collapse text-left whitespace-no-wrap">
+            <table className="table-auto w-full mx-auto text-left whitespace-no-wrap">
               <tbody>
                 <tr className="bg-gray-100">
                   <th className="px-4 py-3 tracking-wider">適用下地</th>
@@ -105,9 +126,13 @@ export default function Specification({ specification }) {
           </div>
           <div className="w-full lg:w-2/3">
             <div className="flex justify-center">
-              {specification.image ? (
-                <Image src={specification.image} width={1280} height={720} />
-              ) : null}
+              <Image
+                src={imagePath(specification.image)}
+                alt={specification.name}
+                width={1280}
+                height={720}
+                objectFit={"contain"}
+              />
             </div>
           </div>
         </div>
@@ -190,27 +215,38 @@ export default function Specification({ specification }) {
         </div>
         {/* document */}
 
-        <div>
-          <div className="pb-10">
-            <Heading3 title="関連資料" />
-          </div>
-          <div className="flex flex-wrap gap-7 p-3">
-            {specification.document &&
-              specification.document.map((doc) => (
-                <Link href={doc.file} key={doc.category}>
-                  <a className="bg-gray-100 text-lg text-gray-800 font-bold hover:bg-blue-400 hover:text-white  p-7 border border-blue-500 border-8 rounded inline-flex items-center">
-                    <svg
-                      className="fill-current w-4 h-4 mr-2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                    </svg>
-                    <span>{doc.category}</span>
-                  </a>
-                </Link>
-              ))}
-          </div>
+        <div className="pb-10">
+          <Heading3 title="関連資料" />
+        </div>
+        <div className="flex flex-wrap gap-7 p-3">
+          {specification.document &&
+            specification.document.map((doc) => (
+              <Link href={doc.file} key={doc.category}>
+                <a className="bg-gray-100 text-lg text-gray-800 font-bold hover:bg-blue-400 hover:text-white  p-7 border border-blue-500 border-8 rounded inline-flex items-center">
+                  <svg
+                    className="fill-current w-4 h-4 mr-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                  </svg>
+                  <span>{doc.category}</span>
+                </a>
+              </Link>
+            ))}
+        </div>
+        <div className="pb-10">
+          <Heading3 title="使用材料一覧" />
+        </div>
+        <div className="flex flex-wrap p-3">
+          {/* card */}
+
+          {materialsSortList &&
+            materialsSortList.map((process) => (
+              <div key={process.order} className="w-full md:w-1/3 p-3">
+                <MaterialCard material={process.material} />
+              </div>
+            ))}
         </div>
       </div>
     </Layout>
