@@ -13,6 +13,7 @@ import {
 } from "../../lib/specification";
 import BreadCrumbs from "../../components/breadcrumbs";
 import MaterialCard from "../../components/specification/MaterialCard";
+import ProcessTable from "../../components/specification/ProcessTable";
 
 export default function Specification({ specification }) {
   const specificationProcessMerge = [
@@ -141,77 +142,18 @@ export default function Specification({ specification }) {
           <Heading3 title="工程" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="pb-8">
-            <span className="p-2 bg-blue-500 text-gray-100 font-bold rounded-sm">{`${specification.part} - ${specification.name}`}</span>
-            <table className="table-auto w-full mx-auto text-left border-2 whitespace-no-wrap">
-              <thead>
-                <tr>
-                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                    工程
-                  </th>
-                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                    使用材料名
-                  </th>
-                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                    使用量
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {specification.process &&
-                  specification.process.map((process) => (
-                    <tr key={process.order}>
-                      <th className="px-4 py-3 font-bold">{process.order}</th>
-                      <td className="px-4 py-3">{process.material.name}</td>
-                      <td className="px-4 py-3">
-                        {process.min_quantity}
-                        {process.max_quantity
-                          ? `～${process.max_quantity}`
-                          : ""}
-                        {process.unit}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
+          {/* main_process */}
+          <ProcessTable
+            part={specification.part}
+            name={specification.name}
+            processes={specification.process}
+          />
           {/* sub_process */}
-          {specification.sub_process[0] ? (
-            <div className="pb-8">
-              <span className="p-2 bg-blue-500 text-gray-100 font-bold rounded-sm">{`${specification.sub_process[0].part} - ${specification.sub_process[0].name}`}</span>
-              <table className="table-auto w-full mx-auto text-left border-2 whitespace-no-wrap">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
-                      工程
-                    </th>
-                    <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                      使用材料名
-                    </th>
-                    <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                      使用量
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {specification.sub_process[0] &&
-                    specification.sub_process[0].process.map((process) => (
-                      <tr key={process.order}>
-                        <td className="px-4 py-3">{process.order}</td>
-                        <td className="px-4 py-3">{process.material.name}</td>
-                        <td className="px-4 py-3">
-                          {process.min_quantity}
-                          {process.max_quantity
-                            ? `～${process.max_quantity}`
-                            : ""}
-                          {process.unit}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
+          <ProcessTable
+            part={specification.sub_process[0].part}
+            name={specification.sub_process[0].name}
+            processes={specification.sub_process[0].process}
+          />
         </div>
         {/* document */}
 
@@ -235,15 +177,18 @@ export default function Specification({ specification }) {
               </Link>
             ))}
         </div>
-        <div className="pb-10">
+        <div className="pb-8">
           <Heading3 title="使用材料一覧" />
         </div>
-        <div className="flex flex-wrap p-3">
+        <div className="flex flex-wrap">
           {/* card */}
 
           {materialsSortList &&
             materialsSortList.map((process) => (
-              <div key={process.order} className="w-full md:w-1/3 p-3">
+              <div
+                key={process.order}
+                className="w-full md:w-1/2 lg:w-1/3 p-3 pb-12"
+              >
                 <MaterialCard material={process.material} />
               </div>
             ))}

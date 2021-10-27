@@ -18,45 +18,56 @@ const MaterialCard = ({ material }) => {
   };
 
   return (
-    <div className="border-gray-200 shadow-lg cursor-pointer">
-      <Link href={`/`}>
-        <div className="h-full border hover:shadow-sm hover:border-transparent border-gray-100 border-opacity-60 rounded-lg overflow-hidden">
-          <div className="lg:h-48 md:h-36 w-full object-cover object-center p-1">
-            <Image
-              src={imagePath(material_image)}
-              alt={name}
-              width={"480"}
-              height={"300"}
-              objectFit={"contain"}
-            />
-          </div>
-
-          <div className="p-6">
-            <div className="p-1">
+    <div className="h-full">
+      <span className="bg-blue-500 text-white font-bold p-2">{category}</span>
+      <div className="h-full border border-gray-200 shadow-lg overflow-hidden">
+        <div className="w-full object-cover object-center p-3">
+          <Image
+            src={imagePath(material_image)}
+            alt={name}
+            width={"480"}
+            height={"300"}
+            objectFit={"contain"}
+          />
+        </div>
+        <div className="p-3">
+          <Link href={`/`}>
+            <div className="p-1 cursor-pointer">
               <div className="flex flex-wrap">
-                <p className="title-font text-2xl font-medium text-gray-900">
+                <p className="title-font text-xl font-medium text-gray-900">
                   {name}
                 </p>
               </div>
-              <p className="text-gray-700 text-sm leading-relaxed mb-3">
+              <p className="text-gray-700 text-xs leading-relaxed mb-3">
                 {normalize_name}
               </p>
             </div>
-            <div className="flex items-center flex-wrap">
-              <p className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                {category}
-              </p>
-              <span className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </span>
-              <span className="text-gray-400 inline-flex items-center leading-none text-sm">
-                {standard}
-              </span>
-            </div>
+          </Link>
+          <div className="p-1 h-20">
+            <p className="text-gray-700 text-sm leading-relaxed mb-3">
+              {description}
+            </p>
           </div>
         </div>
-      </Link>
+        <div className="flex items-end justify-center p-3">
+          {material.document.map((doc) => (
+            <a
+              key={doc.category}
+              className="px-4 py-1 mx-1 bg-gray-200 hover:bg-blue-200 text-xs rounded-full flex flex-wrap items-center"
+              href={doc.file}
+            >
+              <svg
+                className="fill-current w-4 h-4 mr-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+              </svg>
+              <span>{doc.category}</span>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
